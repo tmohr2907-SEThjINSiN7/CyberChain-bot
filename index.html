@@ -1,0 +1,10 @@
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{background:#000;color:#0f0;font-family:monospace;margin:0;display:flex;flex-direction:column;align-items:center}#db{width:100%%;border-bottom:1px solid #0f0;padding:10px;text-align:center;background:#050505}canvas{border:2px solid #0f0;margin-top:20px;box-shadow:0 0 15px #0f0;touch-action:none}</style></head> 
+<body><div id="db"><h2>CYBER CHAIN 8627 DASHBOARD</h2><p>NFT-SCORE: <span id="s">0</span></p></div><canvas id="g" width="360" height="360"></canvas><script> 
+c=document.getElementById("g");x=c.getContext("2d");s=20;sn=[{x:160,y:160}];dx=s;dy=0;ax=80;ay=80;sc=0; 
+function m(){x.fillStyle="#000";x.fillRect(0,0,360,360);x.fillStyle="#f05";x.fillRect(ax,ay,s-2,s-2); 
+h={x:sn[0].x+dx,y:sn[0].y+dy};if(h.x<0)h.x=340;if(h.x>=360)h.x=0;if(h.y<0)h.y=340;if(h.y>=360)h.y=0; 
+sn.unshift(h);if(h.x==ax&&h.y==ay){sc++;document.getElementById("s").innerText=sc;ax=Math.floor(Math.random()*18)*s;ay=Math.floor(Math.random()*18)*s}else{sn.pop()} 
+x.fillStyle="#0f0";sn.forEach(p=>x.fillRect(p.x,p.y,s-2,s-2));setTimeout(m,100)}m(); 
+document.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;}); 
+document.addEventListener("touchmove",e=>{if(!tx)return;dX=tx-e.touches[0].clientX;dY=ty-e.touches[0].clientY;if(Math.abs(dX)>Math.abs(dY)){if(dX>0&&dx==0){dx=-s;dy=0}else if(dX<0&&dx==0){dx=s;dy=0}}else{if(dY>0&&dy==0){dy=-s;dx=0}else if(dY<0&&dy==0){dy=s;dx=0}}tx=null;}); 
+</script></body></html> 
