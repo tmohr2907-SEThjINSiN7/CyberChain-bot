@@ -1,29 +1,27 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><style> 
-body{background:#0a0b10;color:#00ffcc;font-family:monospace;display:flex;flex-direction:column;align-items:center;margin:0;overflow:hidden;} 
-.dash{background:#151821;width:100%%;padding:15px;border-bottom:2px solid #00ffcc;text-align:center;box-shadow:0 4px 15px #000;} 
-canvas{background:#000;border:2px solid #333;margin-top:20px;box-shadow:0 0 20px #00ffcc33;} 
-.ctrl{margin-top:15px;} button{background:transparent;border:1px solid #00ffcc;color:#00ffcc;padding:10px 20px;cursor:pointer;font-family:monospace;font-weight:bold;} 
-.ai-on{background:#ff3366;color:white;border:none;} 
+body{background:#0a0b10;color:#00ffcc;font-family:monospace;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;overflow:hidden;} 
+.dash{background:#151821;padding:20px;border:1px solid #00ffcc;text-align:center;box-shadow:0 0 20px #00ffcc55;margin-bottom:10px;} 
+canvas{background:#000;border:2px solid #333;box-shadow:0 0 30px #000;} 
+.stat{font-size:1.2em;color:#ff3366;margin:10px 0;} 
+button{background:transparent;border:1px solid #00ffcc;color:#00ffcc;padding:10px 20px;cursor:pointer;font-family:monospace;margin-top:10px;} 
+.ai-active{background:#00ffcc;color:#000;} 
 </style></head><body> 
-<div class="dash"><h2 style="margin:0">CYBER-MINER V8</h2>BTC: <span id="btc">0.0000</span> | LENGTH: <span id="len">1</span></div> 
-<canvas id="g" width="400" height="400"></canvas> 
-<div class="ctrl"><button id="abtn" class="ai-on" onclick="toggleAI()">AI: ON</button></div> 
+<div class="dash"><h2 style="margin:0">CYBER-MINER EXTREME</h2><div class="stat">BTC: <span id="btc">0.0000</span> | L: <span id="len">1</span></div><canvas id="g" width="400" height="400"></canvas><br><button id="abtn" class="ai-active" onclick="tAI()">AI: ACTIVE</button></div> 
 <script> 
 const c=document.getElementById("g"),x=c.getContext("2d"),g=20; 
-let sn=[{x:200,y:200}],dx=0,dy=0,ai=true,nf=parseFloat(localStorage.getItem("btc"))||0,ax=100,ay=100; 
-function toggleAI(){ai=!ai;const b=document.getElementById("abtn");b.classList.toggle("ai-on");b.innerText=ai?"AI: ON":"AI: OFF";if(!ai){dx=g;dy=0;}} 
+let sn=[{x:200,y:200}],dx=20,dy=0,ai=true,nf=parseFloat(localStorage.getItem("btc"))||0,ax=100,ay=100; 
+function tAI(){ai=!ai;const b=document.getElementById("abtn");b.classList.toggle("ai-active");b.innerText=ai?"AI: ACTIVE":"MANUAL MODE";} 
 function m(){ 
- let h={...sn[0]}; 
- if(ai){if(h.x<ax)dx=g,dy=0;else if(h.x>ax)dx=-g,dy=0;else if(h.y<ay)dx=0,dy=g;else if(h.y>ay)dx=0,dy=-g;} 
+ let h={x:sn[0].x,y:sn[0].y}; 
+ if(ai){if(h.x<ax)dx=g,dy=0;else if(h.x>ax)dx=-g,dy=0;else if(h.y<ay)dx=0,dy=-g;else if(h.y>ay)dx=0,dy=g;} 
  h.x+=dx;h.y+=dy; 
- if(h.x<0)h.x=380;if(h.x>=400)h.x=0;if(h.y<0)h.y=380;if(h.y>=400)nh.y=0; 
- if(sn.some((p,i)=>i!=0&&p.x==h.x&&p.y==h.y)){sn=[{x:200,y:200}];} 
+ if(h.x<0)h.x=380;if(h.x>=400)h.x=0;if(h.y<0)h.y=380;if(h.y>=400)h.y=0; 
+ if(!ai&&sn.some((p,i)=>i!=0&&p.x==h.x&&p.y==h.y)){sn=[{x:200,y:200}];} 
  sn.unshift(h); 
  if(h.x==ax&&h.y==ay){nf+=0.001;localStorage.setItem("btc",nf);ax=Math.floor(Math.random()*20)*g;ay=Math.floor(Math.random()*20)*g;}else{sn.pop();} 
- x.fillStyle="black";x.fillRect(0,0,400,400);x.fillStyle="red";x.beginPath();x.arc(ax+10,ay+10,8,0,7);x.fill(); 
- x.shadowBlur=10;x.shadowColor="#00ffcc";x.fillStyle="#00ffcc"; 
- sn.forEach((p,i)=>{x.globalAlpha=i==0?1:0.5;x.fillRect(p.x,p.y,g-2,g-2);}); 
+ x.fillStyle="#000";x.fillRect(0,0,400,400);x.fillStyle="#ff3366";x.beginPath();x.arc(ax+10,ay+10,7,0,7);x.fill(); 
+ x.fillStyle="#00ffcc";sn.forEach((p,i)=>{x.globalAlpha=i==0?1:0.4;x.fillRect(p.x,p.y,g-1,g-1);}); 
  document.getElementById("btc").innerText=nf.toFixed(4);document.getElementById("len").innerText=sn.length; 
- setTimeout(m,ai?50:100);}m(); 
+ setTimeout(m,ai?40:80);}m(); 
 window.onkeydown=e=>{if(ai)return;if(e.key=="ArrowUp"&&dy==0){dx=0;dy=-g}if(e.key=="ArrowDown"&&dy==0){dx=0;dy=g}if(e.key=="ArrowLeft"&&dx==0){dx=-g;dy=0}if(e.key=="ArrowRight"&&dx==0){dx=g;dy=0}}; 
 </script></body></html> 
