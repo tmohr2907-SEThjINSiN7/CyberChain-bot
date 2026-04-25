@@ -1,22 +1,6 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"> 
-<style>body{background:#0a0b10;color:#00ffcc;font-family:monospace;display:flex;flex-direction:column;align-items:center;margin:0;touch-action:none;} 
-.dash{background:#151821;width:100%%;padding:15px;border-bottom:2px solid #00ffcc;text-align:center;} 
-canvas{background:#000;border:2px solid #333;margin-top:20px;box-shadow:0 0 20px #00ffcc33;} 
-button{background:transparent;border:1px solid #00ffcc;color:#00ffcc;padding:10px;cursor:pointer;margin:10px;} 
-.ai-on{background:#ff3366;color:white;border:none;}</style></head><body> 
-<div class="dash"><h2 style="margin:0">BITCOIN MINER CORE</h2> 
-BTC: <span id="btc">0.0000</span> | EUR: <span id="eur">0</span></div> 
-<canvas id="g" width="400" height="400"></canvas> 
-<div><button id="abtn" onclick="ai=!ai;this.classList.toggle('ai-on')">AI-AUTOPILOT</button> 
-<button onclick="localStorage.clear();location.reload()">RESET</button></div> 
-<script>const c=document.getElementById("g");const x=c.getContext("2d");const g=20; 
-let sn=[{x:200,y:200}];let dx=g;let dy=0;let ai=true;let nf=parseFloat(localStorage.getItem("btc"))||0;let ax=220;let ay=200; 
-function m(){let h=sn[0];if(ai){if(h.x<ax)dx=g,dy=0;else if(h.x>ax)dx=-g,dy=0;else if(h.y<ay)dx=0,dy=g;else if(h.y>ay)dx=0,dy=-g;} 
-let nh={x:h.x+dx,y:h.y+dy};if(nh.x<0)nh.x=380;if(nh.x>=400)nh.x=0;if(nh.y<0)nh.y=380;if(nh.y>=400)nh.y=0;sn.unshift(nh); 
-if(Math.abs(nh.x-ax)<1&&Math.abs(nh.y-ay)<1){nf+=0.001;localStorage.setItem("btc",nf);ax=Math.floor(Math.random()*20)*g;ay=Math.floor(Math.random()*20)*g;}else{sn.pop();} 
-x.fillStyle="black";x.fillRect(0,0,400,400);x.fillStyle="red";x.beginPath();x.arc(ax+10,ay+10,8,0,7);x.fill(); 
-x.fillStyle="#00ffcc";sn.forEach((p,i)=>{x.globalAlpha=1-(i/sn.length);x.fillRect(p.x,p.y,g-2,g-2);}); 
-document.getElementById("btc").innerText=nf.toFixed(4);document.getElementById("eur").innerText=(nf*68000).toLocaleString(); 
-setTimeout(m,ai?40:100);}m(); 
-window.onkeydown=e=>{if(ai)return;if(e.key=="ArrowUp"&&dy==0){dx=0;dy=-grid}if(e.key=="ArrowDown"&&dy==0){dx=0;dy=grid}if(e.key=="ArrowLeft"&&dx==0){dx=-grid;dy=0}if(e.key=="ArrowRight"&&dx==0){dx=grid;dy=0}}; 
-</script></body></html> 
+<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{background:#0a0b10;color:#00ffcc;font-family:monospace;display:flex;flex-direction:column;align-items:center;margin:0;touch-action:none;} .dash{background:#151821;width:100%%;padding:15px;border-bottom:2px solid #00ffcc;text-align:center;} canvas{background:#000;border:2px solid #333;margin-top:20px;box-shadow:0 0 20px #00ffcc33;} button{background:transparent;border:1px solid #00ffcc;color:#00ffcc;padding:10px;cursor:pointer;margin:10px;} .ai-on{background:#ff3366;color:white;border:none;}</style></head><body> 
+<div class="dash"><h2 style="margin:0">BITCOIN MINER CORE</h2>BTC: <span id="btc">0.0000</span> | EUR: <span id="eur">0</span></div><canvas id="g" width="400" height="400"></canvas><div><button id="abtn" class="ai-on" onclick="ai=!ai;this.classList.toggle('ai-on')">AI-AUTOPILOT</button><button onclick="localStorage.clear();location.reload()">RESET</button></div> 
+<script>const c=document.getElementById("g");const x=c.getContext("2d");const g=20;let sn=[{x:200,y:200}];let dx=g;let dy=0;let ai=true;let nf=parseFloat(localStorage.getItem("btc"))||0;let ax=Math.floor(Math.random()*20)*g;let ay=Math.floor(Math.random()*20)*g; 
+function m(){let h=sn[0];if(ai){if(h.x<ax)dx=g,dy=0;else if(h.x>ax)dx=-g,dy=0;else if(h.y<ay)dx=0,dy=g;else if(h.y>ay)dx=0,dy=-g;}let nh={x:h.x+dx,y:h.y+dy};if(nh.x<0)nh.x=380;if(nh.x>=400)nh.x=0;if(nh.y<0)nh.y=380;if(nh.y>=400)nh.y=0;sn.unshift(nh);if(Math.abs(nh.x-ax)<1&&Math.abs(nh.y-ay)<1){nf+=0.001;localStorage.setItem("btc",nf);ax=Math.floor(Math.random()*20)*g;ay=Math.floor(Math.random()*20)*g;}else{sn.pop();} 
+x.fillStyle="black";x.fillRect(0,0,400,400);x.fillStyle="red";x.beginPath();x.arc(ax+10,ay+10,8,0,7);x.fill();x.fillStyle="#00ffcc";sn.forEach((p,i)=>{x.globalAlpha=1-(i/sn.length);x.fillRect(p.x,p.y,g-2,g-2);});document.getElementById("btc").innerText=nf.toFixed(4);document.getElementById("eur").innerText=(nf*68000).toLocaleString();setTimeout(m,ai?40:100);}m(); 
+window.onkeydown=e=>{if(ai)return;if(e.key=="ArrowUp"&&dy==0){dx=0;dy=-g}if(e.key=="ArrowDown"&&dy==0){dx=0;dy=g}if(e.key=="ArrowLeft"&&dx==0){dx=-g;dy=0}if(e.key=="ArrowRight"&&dx==0){dx=g;dy=0}};</script></body></html> 
