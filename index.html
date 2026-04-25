@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"> 
+<style>body{background:#000;color:#0f0;font-family:monospace;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden} 
+canvas{border:2px solid #0f0;box-shadow:0 0 40px #0f0;image-rendering:pixelated} 
+#s{font-size:18px;margin-bottom:10px;letter-spacing:2px;text-shadow:0 0 10px #0f0} 
+.g{position:absolute;top:0;left:0;width:100%%;height:100%%;pointer-events:none;opacity:0.1;background:linear-gradient(transparent 50%%, rgba(0,255,0,0.1) 50%%);background-size:100%% 4px}</style></head> 
+<body><div class="g"></div><div id="s">MEM-LOAD: 0.0 MB / 64 MB</div><canvas id="g" width="400" height="400"></canvas> 
+<script src="https://telegram.org/js/telegram-web-app.js"></script> 
+<script> 
+const c=document.getElementById("g"),x=c.getContext("2d"),sz=20;let sn=[{x:200,y:200}],dx=sz,dy=0,ax=100,ay=100,sc=0,cl=0; 
+function m(){ 
+if(ax>sn[0].x&&dx!=-sz){dx=sz;dy=0}else if(ax<sn[0].x&&dx!=sz){dx=-sz;dy=0}else if(ay>sn[0].y&&dy!=-sz){dy=sz;dx=0}else if(ay<sn[0].y&&dy!=sz){dy=-sz;dx=0} 
+x.fillStyle="rgba(0,0,0,0.2)";x.fillRect(0,0,400,400);cl+=5; 
+x.fillStyle="hsl("+cl+",100%%,50%%)";x.fillRect(ax,ay,sz-2,sz-2); 
+let h={x:sn[0].x+dx,y:sn[0].y+dy};if(h.x<0)h.x=380;if(h.x>=400)h.x=0;if(h.y<0)h.y=380;if(h.y>=400)h.y=0; 
+sn.unshift(h);if(h.x==ax&&h.y==ay){sc++;ax=Math.floor(Math.random()*20)*sz;ay=Math.floor(Math.random()*20)*sz; 
+document.getElementById("s").innerText="MEM-LOAD: "+(sc*1.1).toFixed(1)+" MB / 64 MB"; 
+if(sc%%64==0){Telegram.WebApp.sendData("MINT_NFT");sc=0}}else{sn.pop()} 
+sn.forEach((p,i)=>{x.fillStyle="hsl("+(cl+i*10)+",100%%,50%%)";x.fillRect(p.x,p.y,sz-2,sz-2); 
+if(Math.random()>0.95)x.fillRect(p.x+Math.random()*10,p.y,sz,2)});setTimeout(m,60)}m(); 
+</script></body></html> 
